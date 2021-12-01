@@ -1,18 +1,27 @@
 package day1
 
-import readInputForDay
+import util.Days
+import util.solveDay
 
 
 fun main() {
-   Day1().solvePart1()
+    solveDay(Day1())
 }
 
 
-class Day1 {
+class Day1 : Days {
+    override fun solvePart1(): String {
+        return findNumDepthIncrease(readInputForDayToIntList()).toString()
+    }
 
-    fun solvePart1() {
-        val lines = readInputForDay(1)
-        val depths = lines.map { it.toInt() }
+    override fun solvePart2(): String {
+        val depths = readInputForDayToIntList()
+        val rollingWindow = rollingWindowThreeLong(depths)
+        return findNumDepthIncrease(rollingWindow).toString()
+    }
+
+
+    private fun findNumDepthIncrease(depths: List<Int>): Int {
         var currentDepth = depths[0]
         var gotDeeper = 0
         for (d in depths.drop(1)) {
@@ -20,9 +29,20 @@ class Day1 {
                 gotDeeper += 1
             }
             currentDepth = d
-
         }
-        println(gotDeeper)
+        return gotDeeper
+    }
+
+
+    private fun rollingWindowThreeLong(depths: List<Int>): List<Int> {
+        val rollingWindow = mutableListOf<Int>()
+        for (i in 0..depths.size) {
+            rollingWindow.add(depths.subList(i, i + 3).sum())
+            if (i + 3 >= depths.size) {
+                break
+            }
+        }
+        return rollingWindow.toList()
     }
 
 }
