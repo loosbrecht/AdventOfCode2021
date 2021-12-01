@@ -1,17 +1,28 @@
+package day1
+
+import readInputForDay
+
+
 fun main() {
-    fun part1(input: List<String>): Int {
-        return input.size
+   Day1().solvePart1()
+}
+
+
+class Day1 {
+
+    fun solvePart1() {
+        val lines = readInputForDay(1)
+        val depths = lines.map { it.toInt() }
+        var currentDepth = depths[0]
+        var gotDeeper = 0
+        for (d in depths.drop(1)) {
+            if (d > currentDepth) {
+                gotDeeper += 1
+            }
+            currentDepth = d
+
+        }
+        println(gotDeeper)
     }
 
-    fun part2(input: List<String>): Int {
-        return input.size
-    }
-
-    // test if implementation meets criteria from the description, like:
-    val testInput = readInputForDay(1)
-    check(part1(testInput) == 1)
-
-    val input = readInput("Day01")
-    println(part1(input))
-    println(part2(input))
 }
