@@ -11,20 +11,34 @@ fun main() {
 class Day7 : Days {
     override fun solvePart1(): String {
         val sortedCrabList = readInputForDay()[0].split(",").map { it.toInt() }.sorted()
-        val middle = sortedCrabList.size / 2
-        var median = 0
-        median = if (middle % 2 == 0) {
-            (sortedCrabList[middle - 1] + sortedCrabList[middle + 1]) / 2
-        } else {
-            sortedCrabList[middle]
-        }
-        val totalFuel =sortedCrabList.sumOf { abs(it - median) }
-        return totalFuel.toString()
+        val fuel = calculatePositionWithMinimumFuel(sortedCrabList, ::calculateFuelOneCostForDistance)
+        return fuel.toString()
     }
 
-
-
     override fun solvePart2(): String {
-        TODO("Not yet implemented")
+        val sortedCrabList = readInputForDay()[0].split(",").map { it.toInt() }.sorted()
+        val fuel = calculatePositionWithMinimumFuel(sortedCrabList, ::calculateFuelGreaterDistanceGreaterCost)
+        return fuel.toString()
+    }
+
+    private fun calculatePositionWithMinimumFuel(sortedCrabList: List<Int>, fuelCost: (Int) -> Int): Int {
+        var totalFuel = Int.MAX_VALUE
+        val minHorizontal = sortedCrabList.first()
+        val maxHorizontal = sortedCrabList.last()
+        for (alignPos in (minHorizontal..maxHorizontal)) {
+            val newTotal = sortedCrabList.sumOf { fuelCost(abs(it - alignPos)) }
+            if (newTotal < totalFuel) {
+                totalFuel = newTotal
+            }
+        }
+        return totalFuel
+    }
+
+    private fun calculateFuelGreaterDistanceGreaterCost(distance: Int): Int {
+        return (0..distance).sum()
+    }
+
+    private fun calculateFuelOneCostForDistance(distance: Int): Int {
+        return distance
     }
 }
