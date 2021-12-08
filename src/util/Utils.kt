@@ -4,6 +4,7 @@ import java.io.File
 
 
 interface Days {
+
     fun solvePart1(): String
     fun solvePart2(): String
     fun dayNum(): String {
@@ -24,7 +25,7 @@ fun solveDay(d: Days) {
 
 
 fun main() {
-    val day = 7
+    val day = 8
     val f = File("src/day$day")
     f.mkdir()
     File("src/day$day/Day$day.kt").createNewFile()
