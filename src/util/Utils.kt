@@ -25,7 +25,7 @@ fun solveDay(d: Days) {
 
 
 fun main() {
-    val day = 11
+    val day = 12
     val f = File("src/day$day")
     f.mkdir()
     File("src/day$day/Day$day.kt").createNewFile()
